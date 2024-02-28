@@ -17,7 +17,7 @@ class User(Base):
     first_name = Column(String(250))
     last_name = Column(String(250))    
     email = Column(String(250), unique=True, nullable=False)
-    password = Column(String(250), unique=True, nullable=False)
+    
 
 class Post(Base):
     __tablename__ = 'post'
@@ -25,6 +25,7 @@ class Post(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('User.id'))
+    user = relationship(User)
 
 class Comment(Base):
     __tablename__ = 'comment'
@@ -34,6 +35,8 @@ class Comment(Base):
     comment_text = Column(String(250))
     user_id = Column(Integer, ForeignKey('User.id'))
     post_id = Column(Integer, ForeignKey('Post.id'))
+    user = relationship(User)
+    post = relationship(Post)
     
 class Followers(Base):
     __tablename__ = 'followers'
@@ -42,6 +45,8 @@ class Followers(Base):
     id = Column(Integer, primary_key= True)
     user_to_id= Column(Integer, ForeignKey('User.id'))
     user_from_id = Column(Integer, ForeignKey('User.id'))
+    user_to = relationship(User)
+    user_from = relationship(User)
 
 ## Draw from SQLAlchemy base
 try:
